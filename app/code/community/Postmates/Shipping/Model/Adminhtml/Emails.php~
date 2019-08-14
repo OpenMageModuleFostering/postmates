@@ -1,0 +1,14 @@
+<?php
+class Postmates_Shipping_Model_Adminhtml_Emails
+{
+    public function toOptionArray()
+    {
+        return array(
+            array('value' => 'general', 'label' => 'General Email'),
+            array('value' => 'sales',   'label' => 'Sales Email'),
+            array('value' => 'support', 'label' => 'Support Email'),
+            array('value' => 'custom1', 'label' => 'Custom1 Email'),
+            array('value' => 'custom2', 'label' => 'Custom2 Email'),
+        );
+    }
+}

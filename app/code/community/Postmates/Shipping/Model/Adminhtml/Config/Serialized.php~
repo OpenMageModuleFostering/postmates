@@ -1,0 +1,75 @@
+<?php
+class Postmates_Shipping_Model_Adminhtml_Config_Serialized
+    extends Mage_Core_Model_Config_Data
+{
+    static public function unpack($serialized)
+    {
+        $objects    = unserialize($serialized);
+        $origFormat = [];
+        if(count($objects)) {
+            foreach($objects as $object) {
+                foreach($object as $key => $value) {
+                    if(!isset($origFormat[$key])) {
+                        $origFormat[$key] = [];
+                    }
+
+                    $origFormat[$key][] = $value;
+                }
+            }
+        }
+
+        return $origFormat;
+    }
+
+    protected function _afterLoad()
+    {   
+        if (!is_array($this->getValue())) {
+            $data = $this->getValue();
+
+            if(empty($data)) {
+                $this->setValue(false);
+            } else {
+                $origFormat = self::unpack($data);
+
+                if(count($origFormat)) {
+                    $this->setValue($origFormat);
+                } else {
+                    $this->setValue(false);
+                }
+            }
+        }
+    }
+
+    protected function _beforeSave()
+    {   
+        if (is_array($this->getValue())) {
+            $value = $this->getValue();
+
+            // Aggregate the values
+            $value       = $this->getValue();
+            $cleanValues = [];
+            foreach($value as $key => $values) {
+                foreach($values as $i => $_value) {
+                    $cleanValues[$i][$key] = $_value;
+                }
+            }
+
+            // Now validate
+            $finalValues = [];
+            foreach($cleanValues as $value) {
+                $valid = true;
+                foreach($value as $key => $_value) {
+                    if(empty($_value)) {
+                        $valid = false;
+                        break;
+                    }
+                }
+                if($valid) {
+                    $finalValues[] = $value;
+                }
+            }
+            
+            $this->setValue(serialize($finalValues));
+        }
+    }
+}

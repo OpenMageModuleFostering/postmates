@@ -1,0 +1,16 @@
+{
+    "name": "OpenMageModuleFostering/Postmates",
+    "type": "magento-module",
+    "license": "MIT",
+    "homepage": "",
+    "description": "Activate on-demand, one hour delivery in your city with the Postmates Magento Extension. ",
+    "authors": [
+    {
+        "name": "Andrew Mager",
+        "email": "mager@postmates.com"
+    }
+],
+    "suggest": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}

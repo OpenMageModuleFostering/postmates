@@ -1,0 +1,48 @@
+<?php
+class Postmates_Shipping_Model_Observer
+{
+    /**
+     * Once an order is successfully placed, this method will create a delivery
+     * for orders that have chosen the postmates_shipping shipping method.
+     */
+    public function createDelivery(Varien_Event_Observer $oObserver)
+    {
+        $oOrder = $oObserver->getData('order');
+
+        // TODO Determine if the shipping method is postmates_shipping
+
+        // TODO Build the manifest
+
+        // Build drop off address
+        $oShipAddress    = $oOrder->getShippingAddress();
+        $sDropoffName    = $oShipAddress->getFirstname();
+        $sDropoffPhone   = $oShipAddress->getTelephone();
+        $sDropoffCompany = $oShipAddress->getCompany();
+        $sDropoffAddr    =
+            $oShipAddress->getStreetFull() . PHP_EOL .
+            $oShipAddress->getCity() . ', ' .
+            $oShipAddress->getState() . ' ' .
+            $oShipAddress->getPostcode();
+
+        // TODO Populate these from the carrier configuration
+        $sPickupNotes = '';
+
+        // TODO Ability to capture dropoff notes from customer during checkout
+        $sDropoffNotes = '';
+
+        // Create the delivery request with Postmates
+        // TODO What if this fails ???
+        $carrier = new Postmates_Shipping_Model_Carrier();
+        $carrier->createDelivery(
+            $sManifest,
+            $sDropoffName,
+            $sDropoffPhone,
+            $sDropoffAddr,
+            $sDropoffCompany,
+            $sDropoffNotes);
+
+        // Clear the shopping cart by marking the quote inactive
+        // XXX Verify this works...
+        $oQuote = $oObserver->getData('quote')->setIsActive(0)->save();
+    }
+}

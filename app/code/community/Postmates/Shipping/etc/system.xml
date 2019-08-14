@@ -1,0 +1,173 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * NOTICE OF COPYRIGHT
+ *
+ * This file is copywritten material only to be used if it has been purchased.
+ * See the Magento Connect website for information to pay if you have not already
+ * and any warranty or support information.
+ *
+ * @category    Postmates
+ * @package     Postmates_Shipping
+ * @copyright   Copyright (c) 2015 Moxune LLC (http://moxune.com)
+ */
+-->
+<config>
+  <sections>
+    <carriers>
+      <groups>
+        <postmates_shipping translate="label">
+          <label>Postmates Shipping</label>
+          <sort_order>2</sort_order>
+          <show_in_default>1</show_in_default>
+          <show_in_website>0</show_in_website>
+          <show_in_store>0</show_in_store>
+          <fields>
+            <active translate="label">
+              <label>Enabled</label>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_yesno</source_model>
+              <sort_order>1</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>0</show_in_website>
+              <show_in_store>0</show_in_store>
+            </active>
+
+            <!-- Postmates configuration -->
+            <customer_id translate="label">
+              <label>Customer ID</label>
+              <frontend_type>text</frontend_type>
+              <sort_order>2</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>0</show_in_website>
+              <show_in_store>0</show_in_store>
+            </customer_id>
+            <api_key translate="label">
+              <label>API Key</label>
+              <frontend_type>text</frontend_type>
+              <sort_order>3</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>0</show_in_website>
+              <show_in_store>0</show_in_store>
+            </api_key>
+
+            <!-- Appearance customization -->
+            <title translate="label">
+              <label>Custom Carrier Title</label>
+              <comment>This is what the shipping carrier will be titled in the frontend. The default is "Postmates"</comment>
+              <frontend_type>text</frontend_type>
+              <sort_order>4</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>0</show_in_website>
+              <show_in_store>0</show_in_store>
+            </title>
+            <custom_carrier_method translate="label">
+              <label>Custom Carrier Method</label>
+              <comment>This is what the shipping method will be methodd in the frontend. The default is "Postmates Delivery"</comment>
+              <frontend_type>text</frontend_type>
+              <sort_order>5</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>0</show_in_website>
+              <show_in_store>0</show_in_store>
+            </custom_carrier_method>
+
+            <!-- Behavior customization -->
+            <flat_rate translate="label">
+              <label>Flat rate charge</label>
+              <comment>If set, this is the charge to the customer instead of the charge of their quote</comment>
+              <frontend_type>text</frontend_type>
+              <sort_order>6</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>0</show_in_website>
+              <show_in_store>0</show_in_store>
+            </flat_rate>
+            <estimates_enabled translate="label">
+              <label>Estimates Enabled</label>
+              <comment>If set, customers will be able to get estimated shipping charges, however, they may not be perfectly accurate since a full street address is not available in the estimation widget. Estimates will always work if you have a flat rate enabled.</comment>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_yesno</source_model>
+              <sort_order>7</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>0</show_in_website>
+              <show_in_store>0</show_in_store>
+            </estimates_enabled>
+
+            <!-- Quote notifications -->
+            <quote_notifications_enabled translate="label">
+              <label>Send quote error notifications</label>
+              <comment>If the extension fails to create a Postmates quote request for a given delivery address, send a notification email.</comment>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_yesno</source_model>
+              <sort_order>8</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>0</show_in_website>
+              <show_in_store>0</show_in_store>
+            </quote_notifications_enabled>
+            <quote_notification_email translate="label comment">
+              <label>Quote Notification Email</label>
+              <comment>Select an email to be notified if a Postmates quote request is not created for a given delivery address.</comment>
+              <frontend_type>select</frontend_type>
+              <source_model>postmates_shipping/adminhtml_emails</source_model>
+              <sort_order>9</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>0</show_in_website>
+              <show_in_store>0</show_in_store>
+            </quote_notification_email>
+            <quote_email_template translate="label">
+              <label>Quote Email Template</label>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_email_template</source_model>
+              <sort_order>10</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>0</show_in_website>
+              <show_in_store>0</show_in_store>
+            </quote_email_template>
+
+            <!-- Delivery notifications -->
+            <delivery_notifications_enabled translate="label">
+              <label>Send delivery error notifications</label>
+              <comment>If the extension fails to create a Postmates delivery request for an order, send a notification email. This is highly recommended.</comment>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_yesno</source_model>
+              <sort_order>11</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>0</show_in_website>
+              <show_in_store>0</show_in_store>
+            </delivery_notifications_enabled>
+            <delivery_notification_email translate="label comment">
+              <label>Delivery Notification Email</label>
+              <comment>Select an email to be notified if a Postmates delivery request is not created for a given order.</comment>
+              <frontend_type>select</frontend_type>
+              <source_model>postmates_shipping/adminhtml_emails</source_model>
+              <sort_order>12</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>0</show_in_website>
+              <show_in_store>0</show_in_store>
+            </delivery_notification_email>
+            <delivery_email_template translate="label">
+              <label>Delivery Email Template</label>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_email_template</source_model>
+              <sort_order>13</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>0</show_in_website>
+              <show_in_store>0</show_in_store>
+            </delivery_email_template>
+
+            <!-- Pickup addresses -->
+            <pickup_addresses>
+              <label>Pickup Addresses</label>
+              <frontend_type>select</frontend_type>
+              <frontend_model>postmates_shipping/adminhtml_pickupaddress</frontend_model>
+              <backend_model>postmates_shipping/adminhtml_config_serialized</backend_model>
+              <sort_order>14</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>0</show_in_website>
+              <show_in_store>0</show_in_store>
+            </pickup_addresses>
+          </fields>
+        </postmates_shipping>
+      </groups>
+    </carriers>
+  </sections>
+</config>

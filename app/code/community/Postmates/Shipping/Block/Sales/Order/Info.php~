@@ -1,0 +1,118 @@
+<?php
+/**
+ * NOTICE OF COPYRIGHT
+ *
+ * This file is copywritten material only to be used if it has been purchased.
+ * See the Magento Connect website for information to pay if you have not already
+ * and any warranty or support information.
+ *
+ * @category    Postmates
+ * @package     Postmates_Shipping
+ * @copyright   Copyright (c) 2015 Moxune LLC (http://moxune.com)
+ */
+/**
+ * Relegate the design directory to our module.
+ */
+class Postmates_Shipping_Sales_Block_Order_Info extends Mage_Sales_Block_Order_Info
+{
+    /**
+     * Fetch a status of the delivery from Postmates to pass to the template.
+     */
+    protected function _construct()
+    {
+        try {
+            // Lookup the Postmates delivery ID via the Magento order
+            $order                = $this->getOrder();
+            $oPostmatesCarrier    = Mage::getModel('postmates_shipping/carrier');
+            $sPostmatesDeliveryId = $order->getPostmatesDeliveryId();
+
+            // If the order has no Postmates delivery ID, display the error status and bail
+            if(empty($sPostmatesDeliveryId)) {
+                $this->_setErrorStatus();
+                return;
+            }
+
+            // Get the status from Postmates
+            $oStatus = $oPostmatesCarrier->getStatus($sPostmatesDeliveryId);
+
+            // Pass an appropriate message to the template
+            if($oStatus->isError()) {
+                $this->_setErrorStatus();
+            } else {
+                switch($oStatus['status']) {
+                    // @note These default messages are taken directly from the Postmates API documentation
+                    //       https://postmates.com/developer/docs/endpoints#list_deliveries
+                    case Postmates_Shipping_Client_Client::STATUS_PENDING:
+                        $this->setDeliveryStatus('Delivery accepted, a courier will be assigned soon');
+                        break;
+                    case Postmates_Shipping_Client_Client::STATUS_PICKUP:
+                        $this->setDeliveryStatus('Courier is assigned and is en route to pick up your item(s)');
+                        break;
+                    case Postmates_Shipping_Client_Client::STATUS_PICKUP_COMPLETE:
+                        $this->setDeliveryStatus('Courier has picked up your item(s)');
+                        break;
+                    case Postmates_Shipping_Client_Client::STATUS_DROPOFF:
+                        $this->setDeliveryStatus('Courier is en route to deliver your item(s)');
+                        break;
+                    case Postmates_Shipping_Client_Client::STATUS_CANCELED:
+                        $this->setDeliveryStatus("Items won't be delivered. " .
+                        'Deliveries are either canceled by the customer or by our customer service team.');
+                        break;
+                    case Postmates_Shipping_Client_Client::STATUS_DELIVERED:
+                        $this->setDeliveryStatus('Your item(s) have been delivered successfully');
+                        break;
+                    case Postmates_Shipping_Client_Client::STATUS_RETURNED:
+                        $this->setDeliveryStatus(
+                            'The delivery was canceled and a new job created to return items to sender.');
+                        break;
+                    default:
+                        $this->_setErrorStatus();
+                }
+            }
+        } catch(Exception $e) {
+            Mage::logException($e);
+            $this->_setErrorStatus();
+        }
+    }
+
+    /**
+     * For some reason we're unable to determine the status of a Postmates delivery.
+     * This will display a general error message to the customer.
+     */
+    protected function _setErrorStatus()
+    {
+        $this->setDeliveryStatus(
+            'Unable to determine the status of your delivery. ' .
+            'Please contact customer service for assistance.');
+    }
+
+
+    // @note The below technique borrowed from Alan Storm's e-book
+    //       No Frills Magento Layout
+
+    /**
+     * Set template location directory
+     *
+     * @param string $dir
+     * @return Mage_Core_Block_Template
+     */
+    public function setScriptPath($dir)
+    {
+        parent::setScriptPath($dir);
+        $this->_viewDir = Mage::getModuleDir('', 'Postmates_Shipping') . DS . 'design';
+        return $this;
+    }
+
+    /**
+     * Retrieve block view from file (template)
+     * Ignores file name, just uses a simple include with template name.
+     *
+     * @param   string $fileName
+     * @return  string
+     */
+    public function fetchView($fileName)			    
+    {	    	
+        $this->setScriptPath(Mage::getModuleDir('', 'Postmates_Shipping') . DS . 'design');			
+        return parent::fetchView($this->getTemplate());
+    }
+}

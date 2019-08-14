@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+    <name>Postmates</name>
+    <version>1.3.0</version>
+    <stability>stable</stability>
+    <license uri="http://opensource.org/licenses/mit-license.php">MIT</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>Activate on-demand, one hour delivery in your city with the Postmates Magento Extension. </summary>
+    <description>The Fastest Way to Deliver Anything in Your City. Integrate a world-class local delivery platform into your Magento store using the Postmates Shipping module. Get started today. </description>
+    <notes>Only works with 1.9.x series of Magento.</notes>
+    <authors><author><name>Andrew Mager</name><user>postmates</user><email>mager@postmates.com</email></author></authors>
+    <date>2016-03-04</date>
+    <time>14:57:09</time>
+    <contents><target name="magecommunity"><dir name="Postmates"><dir name="Shipping"><dir name="Block"><dir name="Adminhtml"><file name="Pickupaddress.php" hash="501d51fbad2cfb0252a8c3fa6df2eda1"/><file name="Pickupaddress.php~" hash="a0bc028f5e246657914370fd03e53c26"/></dir><dir name="Order"><file name="Info.php~" hash="d41d8cd98f00b204e9800998ecf8427e"/></dir><dir name="Sales"><dir name="Order"><file name="Info.php" hash="41830a6974c9f07881a96bd28e39a0dc"/><file name="Info.php~" hash="9c01bcd876fcaffd5c3a0c9b37ce4ab4"/></dir></dir></dir><dir name="Client"><file name="BaseDao.php" hash="1bef128fe893c3303cab34d774a9a5bc"/><file name="Client.php" hash="e0deb8d472959a50b3ffee014c42ccc2"/><dir name="Dao"><file name="Delivery.php" hash="632d70341e4dd28b79a7f673212eeaca"/><file name="DeliveryQuote.php" hash="762046591d169cebf1d0ca2185e2a2c0"/><file name="Error.php" hash="a971b06a6ae39bbfd68d3ea801298952"/><file name="ListResponse.php" hash="024f05acf786f1bf9661eb6c7d35b65e"/><file name="PList.php" hash="163047104493e96086b516da6b8b6bb4"/><file name="Response.php" hash="00b078c2c7f4b5d9bb948e1a980e73e7"/><file name="User.php" hash="3be15ce08c04c6b70c636ce61f7863a9"/></dir><file name="Factory.php" hash="4bf08bda06baca4ef73179da57fcdebc"/></dir><dir name="Model"><dir name="Adminhtml"><dir name="Config"><file name="Serialized.php" hash="6fbb1752598480d62a82a906e8d681dc"/><file name="Serialized.php~" hash="d29390398c390c785e1dfa6426b7a102"/></dir><file name="Emails.php" hash="81ccd6c4501ed1e094f05a6f80569881"/><file name="Emails.php~" hash="45e40b7f5e16bfa5a5a8b44c65d57d4a"/></dir><file name="Carrier.php" hash="c02dc26eb9b4c57452cad2a26951f9bb"/><file name="Emails.php~" hash="d41d8cd98f00b204e9800998ecf8427e"/><file name="Observer.php" hash="1a993f4f7fdb7d0e11e352b68d92302d"/><file name="Observer.php~" hash="7c1ef18267fa173fb022edcb79cdcd09"/></dir><dir name="design"><dir name="sales"><dir name="order"><file name="info.phtml" hash="35500aecaca8fb12ddccfc7c5640f05b"/><file name="info.phtml~" hash="0b90fdc9f613740d6de8c0f3ea2d903a"/></dir></dir></dir><dir name="docs"><file name="Postmates-Shipping-Documentation.pdf" hash="6a8f0d85570084267ee1c668bb3c8f5e"/></dir><dir name="etc"><file name="config.xml" hash="36e5010f40102dbef5f7c5644f0feae0"/><file name="system.xml" hash="c1403abca008518d92f61e4583591553"/></dir><dir name="sql"><dir name="postmates_shipping_setup"><file name="install-1.0.0.php" hash="b4ba2332d28252e195afb1c3d749e2ad"/></dir></dir></dir></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.3.0</min><max>6.0.0</max></php></required></dependencies>
+</package>

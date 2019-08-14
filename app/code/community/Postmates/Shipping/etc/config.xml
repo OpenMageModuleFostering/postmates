@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<config>
+  <!--
+  /**
+   * NOTICE OF COPYRIGHT
+   *
+   * This file is copywritten material only to be used if it has been purchased.
+   * See the Magento Connect website for information to pay if you have not already
+   * and any warranty or support information.
+   *
+   * @category    Postmates
+   * @package     Postmates_Shipping
+   * @copyright   Copyright (c) 2015 Moxune LLC (http://moxune.com)
+   */
+  -->
+  <modules>
+    <Postmates_Shipping>
+      <version>1.3.0</version>
+    </Postmates_Shipping>
+  </modules>
+
+  <global>
+    <models>
+      <postmates_shipping>
+        <class>Postmates_Shipping_Model</class>
+      </postmates_shipping>
+    </models>
+
+    <blocks>
+      <postmates_shipping>
+        <class>Postmates_Shipping_Block</class>
+      </postmates_shipping>
+      <sales>
+        <rewrite>
+          <order_info>Postmates_Shipping_Block_Sales_Order_Info</order_info>
+        </rewrite>
+      </sales>
+    </blocks>
+
+    <template>
+      <email>
+        <sales_postmates_shipping_delivery_email_template>
+          <label>Postmates Shipping Delivery Error</label>
+          <file>postmates_shipping_delivery_error.html</file>
+          <type>html</type>
+        </sales_postmates_shipping_delivery_email_template>
+
+        <sales_postmates_shipping_quote_email_template>
+          <label>Postmates Shipping Quote Error</label>
+          <file>postmates_shipping_quote_error.html</file>
+          <type>html</type>
+        </sales_postmates_shipping_quote_email_template>
+      </email>
+    </template>
+
+    <resources>
+      <postmates_shipping_setup>
+        <setup>
+          <module>Postmates_Shipping</module>
+          <model>mage_sales/resource_setup</model>
+        </setup>
+      </postmates_shipping_setup>
+    </resources>
+
+  </global>
+
+  <default>
+    <!-- custom carrier to get quotes from postmates -->
+    <carriers>
+      <postmates_shipping>
+        <active>1</active>
+        <model>postmates_shipping/carrier</model>
+        <title>Postmates</title>
+        <custom_carrier_method>Postmates Delivery</custom_carrier_method>
+        <sort_order>20</sort_order>
+        <sallowspecific>0</sallowspecific>
+      </postmates_shipping>
+    </carriers>
+  </default>
+
+  <frontend>
+    <events>            
+      <!-- observer to create the delivery once the order is completed -->
+      <checkout_submit_all_after>
+        <observers>
+          <Postmates_Shipping_Customevent>
+            <type>singleton</type>
+            <model>postmates_shipping/observer</model>
+            <method>createDelivery</method>
+          </Postmates_Shipping_Customevent>
+        </observers>
+      </checkout_submit_all_after>
+    </events>
+  </frontend>
+
+</config>
